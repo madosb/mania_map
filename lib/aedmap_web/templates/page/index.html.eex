@@ -1,0 +1,37 @@
+<% [ result ] = Json.get("https://aed.azure-mobile.net", "/api/NearAED?lat=35.96&lng=136.185")
+  latitude = Map.get(result,"Latitude")
+  longitude = Map.get(result,"Longitude")
+  locationName = Map.get(result,"LocationName")
+%>
+
+<%= latitude %><br> 
+<%= longitude %><br>
+<%= locationName %><br>
+
+<%# <div id="map">
+  <script>
+    var map = L.map('map').setView([51.505, -0.09], 13);
+    
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a&gt; contributors'
+    }).addTo(map);
+    
+    L.marker([51.5, -0.09]).addTo(map)
+        .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+        .openPopup();
+  </script>
+</div> %>
+
+<div id="map">
+  <script>
+    var map = L.map('map').setView([35.658581, 139.745433], 13);
+    
+    L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg', {
+        attribution: '&copy; <a href="https://maps.gsi.go.jp/development/ichiran.html">国土地理院</a>contributors'
+    }).addTo(map);
+    
+    L.marker([35.658581, 139.745433]).addTo(map)
+        .bindPopup('東京タワー')
+        .openPopup();
+  </script>
+</div>
