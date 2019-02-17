@@ -2,90 +2,188 @@
 <html lang="en">
   <head>
     <meta charset="utf-8"/>
-    <title>Step1.Leafletで地理院地図を表示する最も基本的なコード|Lefletの基本|埼玉大学谷謙二研究室</title>
+    <title>地形マニアMap</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+    <script src="https://github.com/Zverik/leaflet-grayscale/blob/master/TileLayer.Grayscale.js"></script>
 
     
     <style>
+
+      .marker_tanada {
+        width: 20px !important;
+        height: 20px !important;
+        margin: -10px !important;
+        border-radius: 10px;
+        border: 1px solid #fdfdfd;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.8);
+        background-color: #009900;
+        z-index: 20 !important;
+      }
+      .marker_saka {
+        width: 20px !important;
+        height: 20px !important;
+        margin: -10px !important;
+        border-radius: 10px;
+        border: 1px solid #fdfdfd;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.8);
+        background-color: #c43;
+        z-index: 20 !important;
+      }
+      .marker_yjiro {
+        width: 20px !important;
+        height: 20px !important;
+        margin: -10px !important;
+        border-radius: 10px;
+        border: 1px solid #fdfdfd;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.8);
+        background-color: #F7E91A;
+        z-index: 20 !important;
+      }
+      .marker_haisen {
+        width: 20px !important;
+        height: 20px !important;
+        margin: -10px !important;
+        border-radius: 10px;
+        border: 1px solid #fdfdfd;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.8);
+        background-color: #6600CC;
+        z-index: 20 !important;
+      }
+      
       div#footer{
         border-top: 3px double
       }
-/   }
     </style> 
 
-    <script>
-/*
-      // read csv file ===
-      var reader = new FileReader();
-*/
-      //CSVファイルを読み込む関数getCSV()の定義
-      function getCSV(){
-        var req = new XMLHttpRequest(); // HTTPでファイルを読み込むためのXMLHttpRrequestオブジェクトを生成
-        req.open("get", "sample.csv", true); // アクセスするファイルを指定
-        req.send(null); // HTTPリクエストの発行
-	
-      // レスポンスが返ってきたらconvertCSVtoArray()を呼ぶ	
-        req.onload = function(){
-	      convertCSVtoArray(req.responseText); // 渡されるのは読み込んだCSVデータ
-        }
-      } 
- 
-      // 読み込んだCSVデータを二次元配列に変換する関数convertCSVtoArray()の定義
-        function convertCSVtoArray(str){ // 読み込んだCSVデータが文字列として渡される
-          var result = []; // 最終的な二次元配列を入れるための配列
-          var tmp = str.split("\n"); // 改行を区切り文字として行を要素とした配列を生成
- 
-      // 各行ごとにカンマで区切った文字列を要素とした二次元配列を生成
-          for(var i=0;i<tmp.length;++i){
-            result[i] = tmp[i].split(',');
-          }
- 
-          alert(result[1][2]); // 300yen
-        }
- 
-        getCSV(); //最初に実行される
-
-
-      var markerList = [
-        { pos: [35.8645472, 139.6048663], name: "セブンイレブン浦和埼玉大学店" },
-        { pos: [35.8689857, 139.6086909], name: "セブンイレブンさいたま大久保店" },
-        { pos: [35.871305, 139.6128431], name: "ファミリーマート浦和上大久保店" },
-        { pos: [35.8665389, 139.6133905], name: "ミニストップさいたま上大久保店" },
-        { pos: [35.8650306, 139.6070633], name: "ローソン埼玉大学店" }
-      ];
-      
-      //show map and pins ===
-      function init() {
-        var map = L.map('mapcontainer');
-        L.tileLayer('https://a.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: "map data © <a href='https://www.openstreetmap.org/copyright' target='_blank'>OpenStreetMap</a> contributors"
-        }).addTo(map);
-        //マーカー全体が入るボックスを作る
-        var bound = L.latLngBounds(markerList[0].pos, markerList[0].pos);
-        //markerListの設定でマーカーを追加
-        for (var num in markerList) {
-          var mk = markerList[num];
-          var popup = L.popup().setContent(mk.name);
-          L.marker(mk.pos, { title: mk.name }).bindPopup(popup).addTo(map);
-          //マーカー全体が入るボックスを広げる
-          bound.extend(mk.pos);
-        }
-        //マーカー全体が入るように地図範囲を設定する
-        map.fitBounds(bound);
-      }
-    </script>
   </head>
   
   <body onload="init()">
     <%# ======== header ======== %>
-    <header style="background-color: #f6f6f6; text-align:center;"><div id="header"><h1>地形マニアMap</h1></div></header>
+    <header style="
+            background-color: #000033; 
+            text-align:center;
+            vertical-align: middle;
+            height: 10em;
+            margin: 0 auto; 
+            color: white; 
+            font-style: bold; 
+            font-family: verdana,arial,helvetica,sans-serif;
+            padding: 3.5em 0.01em;">
+      <h1>地形マニアMap</h1>
+      <h4>特徴的な地形がマッピングされています。（棚田、Y字路、坂道(坂学会推薦TOP5)、廃線）</h4>
+    </header>
           <%# <div id="header" style="background-color : pink; text-align:center;"><h1>地形マニアMap</h1></div> %>
     
     <%# ======== map ========= %>
+    <script>
+    
+      // spot list 3 types ===
+      var markerList_tanada = [
+        { pos: [35.0336988, 134.328069], name: "乙大木谷の棚田" },
+        { pos: [35.128267, 134.88074], name: "岩座神の棚田" },
+        { pos: [35.438057, 134.524866], name: "うへ山の棚田" },
+        { pos: [35.503589, 134.581248], name: "西ケ丘の棚田" },
+        { pos: [35.126032, 134.808877], name: "奥猪篠の棚田" },
+        { pos: [35.384064, 134.555241], name: "別宮の棚田" },
+        { pos: [35.024965, 134.02501], name: "田和の棚田" },
+        { pos: [34.539041, 134.928253], name: "石田の棚田" }
+      ];
+      var markerList_saka = [
+        { pos: [34.700294, 135.190185], name: "北野坂" },
+        { pos: [34.638773, 135.043466], name: "歌敷山の坂" },
+        { pos: [34.651339, 135.116829], name: "須磨離宮の坂" },
+        { pos: [34.71548, 135.22446], name: "灘丸山公園の坂" },
+        { pos: [34.758198, 135.31861], name: "西宮北高校の坂" }
+      ];
+      var markerList_yjiro = [
+        { pos: [34.721777, 134.888872], name: "土山駅前" }
+      ];
+      var markerList_haisen = [
+        { pos: [34.826134, 135.322170], name: "JR福知山線廃線跡" },
+        { pos: [34.86331333574336,135.3160667229596], name: "武田尾配線" },
+        { pos: [34.76165177410466,135.24690307870796], name: "六甲有馬ロープウェイ" },
+        { pos: [34.74359858107241,135.32064500005035], name: "西宮市大谷町貨物支線跡" },
+        { pos: [34.74470442672943,135.1500364347384], name: "旧鳥原トンネル有馬線跡" },
+      ]
+
+      //show map and pins ===
+      function init() {
+        var map = L.map('mapcontainer');
+        L.tileLayer('http://www.toolserver.org/tiles/bw-mapnik/{z}/{x}/{y}.png', {
+            attribution: "map data © <a href='https://www.openstreetmap.org/copyright' target='_blank'>OpenStreetMap</a> contributors"
+        }).addTo(map);
+        //マーカー全体が入るボックスを作る
+        var bound = L.latLngBounds(markerList_tanada[0].pos, markerList_tanada[0].pos);
+        //icon
+        //var icon_yjiro = L.divIcon({ className: 'icon1', iconAnchor: [13, 13] });
+        var icon_saka = L.icon(
+         {
+          iconUrl: '/icon/saka-down-red.png',
+          iconRetinaUrl: '/icon/saka-down-red.png',
+          iconSize: [30, 30],
+          iconAnchor: [25, 50],
+          popupAnchor: [0, -50],
+         }
+        );
+        var icon_yjiro = L.icon(
+         {
+          iconUrl: '/icon/yjiro.png',
+          iconRetinaUrl: '/icon/yjiro.png',
+          iconSize: [30, 30],
+          iconAnchor: [25, 50],
+          popupAnchor: [0, -50],
+         }
+        );
+        var icon_haisen = L.icon(
+         {
+          iconUrl: '/icon/hisenn.png',
+          iconRetinaUrl: '/icon/hisenn.png',
+          iconSize: [30, 30],
+          iconAnchor: [25, 50],
+          popupAnchor: [0, -50],
+         }
+        );
+        
+        //markerListの設定でマーカーを追加
+        for (var num in markerList_tanada) {
+          var mk = markerList_tanada[num];
+          var popup = L.popup().setContent(mk.name);
+          L.marker(mk.pos, { icon: L.divIcon({className: 'marker_tanada'}) }, { title: mk.name }).bindPopup(popup).addTo(map);
+          //マーカー全体が入るボックスを広げる
+          bound.extend(mk.pos);
+        }
+        for (var num in markerList_saka) {
+          var mk = markerList_saka[num];
+          var popup = L.popup().setContent(mk.name);
+          L.marker(mk.pos, { icon: icon_saka }, { title: mk.name }).bindPopup(popup).addTo(map);
+          //マーカー全体が入るボックスを広げる
+          bound.extend(mk.pos);
+        }
+        for (var num in markerList_yjiro) {
+          var mk = markerList_yjiro[num];
+          var popup = L.popup().setContent(mk.name);
+          L.marker(mk.pos, { icon: icon_yjiro }, { title: mk.name }).bindPopup(popup).addTo(map);
+          //マーカー全体が入るボックスを広げる
+          bound.extend(mk.pos);
+        }
+        for (var num in markerList_haisen) {
+          var mk = markerList_haisen[num];
+          var popup = L.popup().setContent(mk.name);
+          L.marker(mk.pos, { icon: icon_haisen }, { title: mk.name }).bindPopup(popup).addTo(map);
+          //マーカー全体が入るボックスを広げる
+          bound.extend(mk.pos);
+        }
+
+        //マーカー全体が入るように地図範囲を設定する
+        map.fitBounds(bound);
+        
+      }
+    </script>
+ 
     <div id="mapcontainer" style="margin: 10px auto;width:40%;height:500px;" ></div>
     
     <%# ======== footer ========= %>
