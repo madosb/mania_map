@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
 
- 
+    
     <style>
       div#footer{
         border-top: 3px double
@@ -18,13 +18,47 @@
     </style> 
 
     <script>
-        var markerList = [
-          { pos: [35.8645472, 139.6048663], name: "セブンイレブン浦和埼玉大学店" },
-          { pos: [35.8689857, 139.6086909], name: "セブンイレブンさいたま大久保店" },
-          { pos: [35.871305, 139.6128431], name: "ファミリーマート浦和上大久保店" },
-          { pos: [35.8665389, 139.6133905], name: "ミニストップさいたま上大久保店" },
-          { pos: [35.8650306, 139.6070633], name: "ローソン埼玉大学店" }
-        ];
+/*
+      // read csv file ===
+      var reader = new FileReader();
+*/
+      //CSVファイルを読み込む関数getCSV()の定義
+      function getCSV(){
+        var req = new XMLHttpRequest(); // HTTPでファイルを読み込むためのXMLHttpRrequestオブジェクトを生成
+        req.open("get", "sample.csv", true); // アクセスするファイルを指定
+        req.send(null); // HTTPリクエストの発行
+	
+      // レスポンスが返ってきたらconvertCSVtoArray()を呼ぶ	
+        req.onload = function(){
+	      convertCSVtoArray(req.responseText); // 渡されるのは読み込んだCSVデータ
+        }
+      } 
+ 
+      // 読み込んだCSVデータを二次元配列に変換する関数convertCSVtoArray()の定義
+        function convertCSVtoArray(str){ // 読み込んだCSVデータが文字列として渡される
+          var result = []; // 最終的な二次元配列を入れるための配列
+          var tmp = str.split("\n"); // 改行を区切り文字として行を要素とした配列を生成
+ 
+      // 各行ごとにカンマで区切った文字列を要素とした二次元配列を生成
+          for(var i=0;i<tmp.length;++i){
+            result[i] = tmp[i].split(',');
+          }
+ 
+          alert(result[1][2]); // 300yen
+        }
+ 
+        getCSV(); //最初に実行される
+
+
+      var markerList = [
+        { pos: [35.8645472, 139.6048663], name: "セブンイレブン浦和埼玉大学店" },
+        { pos: [35.8689857, 139.6086909], name: "セブンイレブンさいたま大久保店" },
+        { pos: [35.871305, 139.6128431], name: "ファミリーマート浦和上大久保店" },
+        { pos: [35.8665389, 139.6133905], name: "ミニストップさいたま上大久保店" },
+        { pos: [35.8650306, 139.6070633], name: "ローソン埼玉大学店" }
+      ];
+      
+      //show map and pins ===
       function init() {
         var map = L.map('mapcontainer');
         L.tileLayer('https://a.tile.openstreetmap.org/{z}/{x}/{y}.png', {
