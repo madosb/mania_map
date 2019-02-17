@@ -27,8 +27,8 @@
         ];
       function init() {
         var map = L.map('mapcontainer');
-        L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
-          attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>"
+        L.tileLayer('https://a.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: "map data © <a href='https://www.openstreetmap.org/copyright' target='_blank'>OpenStreetMap</a> contributors"
         }).addTo(map);
         //マーカー全体が入るボックスを作る
         var bound = L.latLngBounds(markerList[0].pos, markerList[0].pos);
@@ -43,16 +43,6 @@
         //マーカー全体が入るように地図範囲を設定する
         map.fitBounds(bound);
       }
-      /* function init() {
-        //地図を表示するdiv要素のidを設定
-        var map = L.map('mapcontainer');
-        //地図の中心とズームレベルを指定
-        map.setView([35.1232554,134.8429293], 9);
-        //表示するタイルレイヤのURLとAttributionコントロールの記述を設定して、地図に追加する
-        L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
-            attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>"
-        }).addTo(map);
-      } */
     </script>
   </head>
   
